@@ -182,38 +182,156 @@
             box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.25);
         }
 
-        /* Views column styling - Make more specific to avoid affecting notification badge */
-        .data-table .badge {
-            font-size: 0.85em;
-            padding: 0.4em 0.6em;
-            font-weight: 500;
-        }
+        /* ========================================
+   ARTICLE MANAGEMENT PAGE COMPONENTS
+   CSS Best Practices Implementation
+   ======================================== */
 
-        /* Ensure navbar-badge is not affected */
-        .navbar-badge {
-            font-size: 0.7rem !important;
-            font-weight: 700 !important;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24) !important;
-        }
+   /* Article Page Layout Wrapper */
+   .article-management-page {
+       /* Page-specific styles if needed */
+   }
 
-        #sortOptions {
-            min-width: 180px;
-        }
+   /* Article Statistics Component */
+   .article-stats-section {
+       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+       border-radius: 12px;
+       padding: 1.5rem;
+       margin-bottom: 1.5rem;
+       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+   }
 
-        /* Optional: Add hover effect to views badge */
-        .data-table .badge:hover {
-            transform: scale(1.05);
-            transition: all 0.2s ease-in-out;
-        }
+   .article-stats-section__header {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       margin-bottom: 0;
+   }
+
+   .article-stats-section__info {
+       display: flex;
+       align-items: center;
+       gap: 0.5rem;
+   }
+
+   .article-stats-section__info-icon {
+       color: rgba(255, 255, 255, 0.8);
+       font-size: 1.1rem;
+   }
+
+   .article-stats-section__info-text {
+       color: rgba(255, 255, 255, 0.9);
+       font-size: 0.875rem;
+       margin: 0;
+   }
+
+   .article-stats-section__info-value {
+       color: #ffffff;
+       font-weight: 600;
+       font-size: 1rem;
+   }
+
+   /* Article Filter Component */
+   .article-filter-section {
+       margin-bottom: 1rem;
+   }
+
+   .article-filter-section__control-group {
+       display: flex;
+       align-items: center;
+       gap: 0.5rem;
+   }
+
+   .article-filter-section__label {
+       color: #495057;
+       font-weight: 500;
+       font-size: 0.875rem;
+       margin: 0;
+       white-space: nowrap;
+   }
+
+   .article-filter-section__dropdown {
+       min-width: 180px;
+       font-size: 0.875rem;
+       border-radius: 6px;
+       border: 1px solid #dee2e6;
+       padding: 0.375rem 0.75rem;
+   }
+
+   /* Article Table Component */
+   .article-data-table {
+       background: white;
+       border-radius: 8px;
+       overflow: hidden;
+       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+   }
+
+   .article-data-table__badge {
+       font-size: 0.85rem;
+       padding: 0.4em 0.6em;
+       font-weight: 500;
+       border-radius: 4px;
+       transition: transform 0.2s ease-in-out;
+   }
+
+   .article-data-table__badge:hover {
+       transform: scale(1.05);
+   }
+
+   /* Views Badge Variants (State-based) */
+   .article-data-table__badge--views-low {
+       background-color: #d4edda;
+       color: #155724;
+   }
+
+   .article-data-table__badge--views-medium {
+       background-color: #d1ecf1;
+       color: #0c5460;
+   }
+
+   .article-data-table__badge--views-high {
+       background-color: #fff3cd;
+       color: #856404;
+   }
+
+   .article-data-table__badge--views-viral {
+       background-color: #f8d7da;
+       color: #721c24;
+   }
+
+   /* Utility Classes (Global, reusable) */
+   .u-text-white { color: #ffffff !important; }
+   .u-font-weight-600 { font-weight: 600 !important; }
+   .u-font-weight-500 { font-weight: 500 !important; }
+
+   /* Responsive Design */
+   @media (max-width: 768px) {
+       .article-stats-section__header {
+           flex-direction: column;
+           gap: 1rem;
+           align-items: flex-start;
+       }
+
+       .article-filter-section__control-group {
+           width: 100%;
+           justify-content: space-between;
+       }
+
+       .article-filter-section__dropdown {
+           flex: 1;
+           max-width: 200px;
+       }
+   }
 
             </style>
 @endsection
 
 @section('content')
-    <div class="container-fluid py-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="article-card">
+    <div class="article-management-page">
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="article-card">
                     <div class="article-card-header">
                         <div>
                             <i class="material-icons-round mr-2" style="font-size: 24px; vertical-align: middle;">description</i>
@@ -242,19 +360,30 @@
                             </div>
                         </div>
 
-                        <!-- Views Statistics Summary -->
-                        <div class="row mb-2">
-                            <div class="col-md-12">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <small class="text-muted">
-                                            <i class="fas fa-eye"></i> Total Views: <span id="totalViews" class="fw-bold">-</span> |
-                                            Rata-rata: <span id="avgViews" class="fw-bold">-</span>
-                                        </small>
+                        <!-- Article Statistics & Filter Component -->
+                        <div class="article-stats-section">
+                            <div class="article-stats-section__header">
+                                <!-- Statistics Info -->
+                                <div class="article-stats-section__info">
+                                    <i class="fas fa-eye article-stats-section__info-icon"></i>
+                                    <div class="article-stats-section__info-text">
+                                        Total Views:
+                                        <span id="totalViews" class="article-stats-section__info-value">-</span>
                                     </div>
-                                    <div>
-                                        <label for="sortOptions" class="form-label me-2">Urutkan:</label>
-                                        <select id="sortOptions" class="form-select form-select-sm" style="width: auto; display: inline-block;">
+                                    <div class="article-stats-section__info-text">
+                                        |
+                                    </div>
+                                    <div class="article-stats-section__info-text">
+                                        Rata-rata:
+                                        <span id="avgViews" class="article-stats-section__info-value">-</span>
+                                    </div>
+                                </div>
+
+                                <!-- Filter Control -->
+                                <div class="article-filter-section">
+                                    <div class="article-filter-section__control-group">
+                                        <label for="sortOptions" class="article-filter-section__label">Urutkan:</label>
+                                        <select id="sortOptions" class="form-select article-filter-section__dropdown">
                                             <option value="default">Tanggal (Terbaru)</option>
                                             <option value="views_desc">Views (Tertinggi)</option>
                                             <option value="views_asc">Views (Terendah)</option>
@@ -376,17 +505,20 @@
                         if (type === 'sort' || type === 'type') {
                             return row.views || 0;
                         }
-                        // Determine badge color based on views count
+
+                        // Determine badge variant based on views count using state-based approach
                         var views = row.views || 0;
-                        var badgeClass = 'bg-secondary';
+                        var badgeVariant = 'article-data-table__badge--views-low';
+
                         if (views >= 1000) {
-                            badgeClass = 'bg-warning'; // Orange for high views
-                        } else if (views >= 100) {
-                            badgeClass = 'bg-info'; // Blue for medium views
-                        } else if (views >= 10) {
-                            badgeClass = 'bg-success'; // Green for low views
+                            badgeVariant = 'article-data-table__badge--views-viral'; // Viral content
+                        } else if (views >= 500) {
+                            badgeVariant = 'article-data-table__badge--views-high'; // High performing
+                        } else if (views >= 50) {
+                            badgeVariant = 'article-data-table__badge--views-medium'; // Moderate views
                         }
-                        return '<span class="badge ' + badgeClass + '">' + data + '</span>';
+
+                        return '<span class="article-data-table__badge ' + badgeVariant + '">' + data + '</span>';
                     }
                 },
                 {
