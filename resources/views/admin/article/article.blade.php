@@ -521,18 +521,20 @@
         function updateViewStatistics(json) {
             // Use server-calculated statistics instead of client-side
             var totalViews = json.total_views_all || 0;
-            var avgViews = Math.round(json.avg_views_all || 0);
+            var avgViews = Math.round((json.avg_views_all || 0) * 10) / 10; // Round to 1 decimal place like dashboard
 
             // Format numbers
             function formatNumber(num) {
                 if (num >= 1000) {
                     return (num / 1000).toFixed(1) + 'K';
                 }
-                return num.toString();
+                // Keep decimal for average if it exists
+                return num % 1 !== 0 ? num.toFixed(1) : num.toString();
             }
 
             $('#totalViews').text(formatNumber(totalViews));
-            $('#avgViews').text(formatNumber(avgViews));
+            // For average, show with 1 decimal place like dashboard
+            $('#avgViews').text(avgViews % 1 !== 0 ? avgViews.toFixed(1) : avgViews.toString());
         }
 
         // Update statistics on initial load and after each draw
