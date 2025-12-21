@@ -666,6 +666,19 @@
             font-size: 24px !important;
             color: inherit !important;
             display: inline-block !important;
+            font-weight: normal !important;
+            line-height: 1 !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        #notificationDropdown {
+            position: relative !important;
+        }
+
+        #notificationDropdown .material-icons-round::before {
+            content: 'notifications' !important;
+            font-family: 'Material Icons Round' !important;
         }
 
         #notificationDropdown .badge {
