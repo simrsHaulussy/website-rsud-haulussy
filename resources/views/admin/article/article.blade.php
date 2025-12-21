@@ -189,6 +189,13 @@
             font-weight: 500;
         }
 
+        /* Ensure navbar-badge is not affected */
+        .navbar-badge {
+            font-size: 0.7rem !important;
+            font-weight: 700 !important;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24) !important;
+        }
+
         #sortOptions {
             min-width: 180px;
         }
@@ -199,34 +206,7 @@
             transition: all 0.2s ease-in-out;
         }
 
-        /* Fix notification icon styling */
-        #notificationDropdown .material-icons-round {
-            font-size: 24px !important;
-            color: inherit !important;
-            display: inline-block !important;
-            font-weight: normal !important;
-            line-height: 1 !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-
-        #notificationDropdown {
-            position: relative !important;
-        }
-
-        #notificationDropdown .material-icons-round::before {
-            content: 'notifications' !important;
-            font-family: 'Material Icons Round' !important;
-        }
-
-        #notificationDropdown .badge {
-            font-size: 0.75rem !important;
-            padding: 0.25em 0.4em !important;
-            position: absolute !important;
-            top: 8px !important;
-            right: 8px !important;
-        }
-    </style>
+            </style>
 @endsection
 
 @section('content')
