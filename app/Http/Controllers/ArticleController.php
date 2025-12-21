@@ -69,6 +69,8 @@ class ArticleController extends Controller
                     return number_format($views);
                 })
                 ->rawColumns(['action'])
+                ->with('total_views_all', Post::where('category', 'article')->sum('views'))
+                ->with('avg_views_all', Post::where('category', 'article')->avg('views'))
                 ->make(true);
         }
 

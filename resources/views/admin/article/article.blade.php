@@ -517,17 +517,11 @@
             }
         });
 
-        // Update statistics after table load
-        table.on('draw', function() {
-            var data = table.data().toArray();
-            var totalViews = 0;
-            var count = data.length;
-
-            data.forEach(function(row) {
-                totalViews += parseInt(row.views || 0);
-            });
-
-            var avgViews = count > 0 ? Math.round(totalViews / count) : 0;
+        // Update statistics using server data
+        function updateViewStatistics(json) {
+            // Use server-calculated statistics instead of client-side
+            var totalViews = json.total_views_all || 0;
+            var avgViews = Math.round(json.avg_views_all || 0);
 
             // Format numbers
             function formatNumber(num) {
@@ -539,6 +533,13 @@
 
             $('#totalViews').text(formatNumber(totalViews));
             $('#avgViews').text(formatNumber(avgViews));
+        }
+
+        // Update statistics on initial load and after each draw
+        table.on('xhr', function(e, settings, json) {
+            if (json) {
+                updateViewStatistics(json);
+            }
         });
     </script>
 @endsection
