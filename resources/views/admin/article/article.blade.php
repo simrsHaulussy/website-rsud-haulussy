@@ -523,13 +523,10 @@
             var totalViews = json.total_views_all || 0;
             var avgViews = Math.round((json.avg_views_all || 0) * 10) / 10; // Round to 1 decimal place like dashboard
 
-            // Format numbers
+            // Format numbers to match dashboard exactly
             function formatNumber(num) {
-                if (num >= 1000) {
-                    return (num / 1000).toFixed(1) + 'K';
-                }
-                // Keep decimal for average if it exists
-                return num % 1 !== 0 ? num.toFixed(1) : num.toString();
+                // Simulate PHP number_format behavior
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }
 
             $('#totalViews').text(formatNumber(totalViews));
