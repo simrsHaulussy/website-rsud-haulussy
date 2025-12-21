@@ -181,6 +181,23 @@
             outline: none;
             box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.25);
         }
+
+        /* Views column styling */
+        .badge {
+            font-size: 0.85em;
+            padding: 0.4em 0.6em;
+            font-weight: 500;
+        }
+
+        #sortOptions {
+            min-width: 180px;
+        }
+
+        /* Optional: Add hover effect to views badge */
+        .badge:hover {
+            transform: scale(1.05);
+            transition: all 0.2s ease-in-out;
+        }
     </style>
 @endsection
 
@@ -217,15 +234,39 @@
                             </div>
                         </div>
 
+                        <!-- Views Statistics Summary -->
+                        <div class="row mb-2">
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <small class="text-muted">
+                                            <i class="fas fa-eye"></i> Total Views: <span id="totalViews" class="fw-bold">-</span> |
+                                            Rata-rata: <span id="avgViews" class="fw-bold">-</span>
+                                        </small>
+                                    </div>
+                                    <div>
+                                        <label for="sortOptions" class="form-label me-2">Urutkan:</label>
+                                        <select id="sortOptions" class="form-select form-select-sm" style="width: auto; display: inline-block;">
+                                            <option value="default">Tanggal (Terbaru)</option>
+                                            <option value="views_desc">Views (Tertinggi)</option>
+                                            <option value="views_asc">Views (Terendah)</option>
+                                            <option value="date_asc">Tanggal (Terlama)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table article-table data-table">
                                 <thead>
                                     <tr>
                                         <th width="5%">#</th>
-                                        <th width="40%">Judul</th>
-                                        <th width="20%">Penulis</th>
+                                        <th width="35%">Judul</th>
+                                        <th width="18%">Penulis</th>
                                         <th width="15%">Tanggal</th>
-                                        <th width="20%" class="text-end">Aksi</th>
+                                        <th width="12%">Views</th>
+                                        <th width="15%" class="text-end">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -317,6 +358,27 @@
                             month: 'short',
                             year: 'numeric'
                         });
+                    }
+                },
+                {
+                    data: 'views_formatted',
+                    name: 'views',
+                    orderSequence: ['desc', 'asc'],
+                    render: function(data, type, row) {
+                        if (type === 'sort' || type === 'type') {
+                            return row.views || 0;
+                        }
+                        // Determine badge color based on views count
+                        var views = row.views || 0;
+                        var badgeClass = 'bg-secondary';
+                        if (views >= 1000) {
+                            badgeClass = 'bg-warning'; // Orange for high views
+                        } else if (views >= 100) {
+                            badgeClass = 'bg-info'; // Blue for medium views
+                        } else if (views >= 10) {
+                            badgeClass = 'bg-success'; // Green for low views
+                        }
+                        return '<span class="badge ' + badgeClass + '">' + data + '</span>';
                     }
                 },
                 {
@@ -443,5 +505,40 @@
                 }
             });
         }
+
+        // Dropdown sorting handler
+        $('#sortOptions').on('change', function() {
+            var value = $(this).val();
+            switch(value) {
+                case 'views_desc': table.order([4, 'desc']).draw(); break;
+                case 'views_asc': table.order([4, 'asc']).draw(); break;
+                case 'date_asc': table.order([3, 'asc']).draw(); break;
+                default: table.order([3, 'desc']).draw();
+            }
+        });
+
+        // Update statistics after table load
+        table.on('draw', function() {
+            var data = table.data().toArray();
+            var totalViews = 0;
+            var count = data.length;
+
+            data.forEach(function(row) {
+                totalViews += parseInt(row.views || 0);
+            });
+
+            var avgViews = count > 0 ? Math.round(totalViews / count) : 0;
+
+            // Format numbers
+            function formatNumber(num) {
+                if (num >= 1000) {
+                    return (num / 1000).toFixed(1) + 'K';
+                }
+                return num.toString();
+            }
+
+            $('#totalViews').text(formatNumber(totalViews));
+            $('#avgViews').text(formatNumber(avgViews));
+        });
     </script>
 @endsection

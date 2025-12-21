@@ -61,6 +61,13 @@ class ArticleController extends Controller
 
                     return $actionBtn;
                 })
+                ->addColumn('views_formatted', function ($article) {
+                    $views = $article->views ?? 0;
+                    if ($views >= 1000) {
+                        return number_format($views / 1000, 1) . 'K';
+                    }
+                    return number_format($views);
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
