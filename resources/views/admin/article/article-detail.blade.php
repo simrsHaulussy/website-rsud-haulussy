@@ -654,9 +654,26 @@
             border-radius: 3px;
         }
 
-        /* Badge Styles */
-        .badge {
+        /* Badge Styles - Make more specific to avoid affecting notification badge */
+        .article-stats .badge,
+        .performance-grade .badge,
+        .related-articles .badge {
             font-size: 0.75rem;
+        }
+
+        /* Fix notification icon styling */
+        #notificationDropdown .material-icons-round {
+            font-size: 24px !important;
+            color: inherit !important;
+            display: inline-block !important;
+        }
+
+        #notificationDropdown .badge {
+            font-size: 0.75rem !important;
+            padding: 0.25em 0.4em !important;
+            position: absolute !important;
+            top: 8px !important;
+            right: 8px !important;
         }
 
         /* Responsive Adjustments */
