@@ -548,7 +548,12 @@
        transform: translateX(-50%);
    }
 
-   /* Tooltip positioning untuk badges di bagian atas */
+   /* ==========================================================================
+      TOOLTIP POSITIONING FIXES
+      Prevents tooltip clipping for views badges in data table
+      ========================================================================== */
+
+   /* Bottom tooltip positioning for top-row badges */
    .custom-tooltip--badge.tooltip-bottom {
        bottom: auto;
        top: 100%;
@@ -556,6 +561,7 @@
        margin-top: 8px;
    }
 
+   /* Arrow positioning for bottom tooltips */
    .custom-tooltip--badge.tooltip-bottom::after {
        top: auto;
        bottom: 100%;
@@ -563,23 +569,23 @@
        border-bottom-color: #1a1a1a;
    }
 
-   /* Fix untuk tooltip yang terpotong di tabel */
+   /* Table container overflow fix - allows tooltips to display outside bounds */
    .table-responsive {
        overflow: visible !important;
    }
 
-   /* Pastikan container tidak memotong tooltip */
+   /* Table cell positioning - ensures tooltips are not clipped */
    .article-data-table td {
        position: relative;
        overflow: visible !important;
    }
 
-   /* Z-index yang lebih tinggi untuk memastikan tooltip muncul di atas elemen lain */
+   /* Elevated z-index - ensures tooltips appear above all other elements */
    .custom-tooltip--badge {
        z-index: 9999 !important;
    }
 
-   /* Tambahan untuk memastikan tooltip terlihat di layar */
+   /* Responsive tooltip adjustments - maintains readability across screen sizes */
    @media screen {
        .custom-tooltip--badge {
            max-width: 280px !important;
@@ -863,22 +869,37 @@
             }
         }
 
+        /**
+         * Initializes and positions tooltips for all views badges
+         *
+         * This function dynamically positions tooltips based on available viewport space,
+         * preventing clipping issues especially for badges in table header rows.
+         *
+         * Features:
+         * - Intelligent vertical positioning (top/bottom) based on space constraints
+         * - Horizontal adjustment to prevent viewport overflow
+         * - Automatic badge classification based on view count
+         * - Responsive handling for different screen sizes
+         */
         function populateAllBadges() {
             const badges = document.querySelectorAll('.views-tooltip-trigger');
             badges.forEach(function(badge) {
-                // Extract data from the badge's inner text
+                // Parse view count from badge text content
                 const viewsText = badge.textContent.replace('Loading...', '').trim();
                 const viewsMatch = viewsText.match(/[\d.]+K?/);
+
                 if (viewsMatch) {
                     const viewsTextValue = viewsMatch[0];
                     let views = 0;
+
+                    // Convert K notation to actual numbers
                     if (viewsTextValue.includes('K')) {
                         views = parseFloat(viewsTextValue.replace('K', '')) * 1000;
                     } else {
                         views = parseInt(viewsTextValue);
                     }
 
-                    // Determine badge class
+                    // Determine appropriate badge class based on view count thresholds
                     let badgeClass = 'article-data-table__badge--views-low';
                     if (views >= 2000) {
                         badgeClass = 'article-data-table__badge--views-viral';
@@ -888,34 +909,34 @@
                         badgeClass = 'article-data-table__badge--views-medium';
                     }
 
+                    // Populate tooltip with category information
                     populateBadgeTooltip(badge, views, badgeClass);
 
-                    // Determine tooltip position (top or bottom)
+                    // Calculate optimal tooltip positioning
                     const tooltip = badge.querySelector('.custom-tooltip');
                     if (tooltip) {
-                        // Get the badge position relative to the viewport
+                        // Get badge and container dimensions
                         const rect = badge.getBoundingClientRect();
                         const tableContainer = badge.closest('.table-responsive');
                         const containerRect = tableContainer ? tableContainer.getBoundingClientRect() : null;
 
-                        // Check if badge is in the first few rows
+                        // Identify badges in top table rows that need special handling
                         const row = badge.closest('tr');
-                        const isNearTop = row && row.rowIndex <= 2; // First 2 rows
+                        const isNearTop = row && row.rowIndex <= 2; // First 2 rows require bottom positioning
 
-                        const tooltipHeight = 160; // Increased estimated tooltip height
+                        const tooltipHeight = 160; // Estimated tooltip height in pixels
                         const spaceAbove = rect.top;
                         const spaceBelow = window.innerHeight - rect.bottom;
 
-                        // Force tooltip to show below for first few rows or if not enough space above
-                        if (isNearTop || spaceAbove < tooltipHeight + 20) { // Added 20px buffer
+                        // Position tooltip below badges in top rows or when insufficient space above
+                        if (isNearTop || spaceAbove < tooltipHeight + 20) { // 20px safety buffer
                             tooltip.classList.add('tooltip-bottom');
 
-                            // Adjust positioning for bottom tooltips to avoid viewport edge
+                            // Handle edge cases where tooltip might still be clipped
                             if (spaceBelow < tooltipHeight) {
-                                // If also not enough space below, adjust positioning
                                 const viewportCenter = window.innerHeight / 2;
                                 if (rect.top < viewportCenter) {
-                                    // Badge is in upper half, force show below
+                                    // Prioritize bottom positioning for upper-half elements
                                     tooltip.style.maxHeight = Math.min(spaceBelow - 10, 200) + 'px';
                                     tooltip.style.overflowY = 'auto';
                                 }
@@ -924,22 +945,22 @@
                             tooltip.classList.remove('tooltip-bottom');
                         }
 
-                        // Ensure tooltip stays within viewport horizontally
+                        // Adjust horizontal positioning to prevent viewport overflow
                         const tooltipWidth = 220;
                         const spaceLeft = rect.left;
                         const spaceRight = window.innerWidth - rect.right;
 
                         if (spaceLeft < tooltipWidth / 2) {
-                            // Not enough space on left, align to left edge
+                            // Align to left edge when insufficient space on left
                             tooltip.style.left = '0';
                             tooltip.style.transform = 'translateX(0)';
                         } else if (spaceRight < tooltipWidth / 2) {
-                            // Not enough space on right, align to right edge
+                            // Align to right edge when insufficient space on right
                             tooltip.style.left = 'auto';
                             tooltip.style.right = '0';
                             tooltip.style.transform = 'translateX(0)';
                         } else {
-                            // Center position
+                            // Default center alignment
                             tooltip.style.left = '50%';
                             tooltip.style.right = 'auto';
                             tooltip.style.transform = 'translateX(-50%)';
@@ -1201,35 +1222,48 @@
             populateStatsTooltip(totalViews, avgViews, articleCount);
         }
 
-        // Update statistics on initial load and after each draw
+        /**
+         * =========================================================================
+         * EVENT LISTENERS
+         * Manages dynamic tooltip repositioning on viewport changes
+         * =========================================================================
+         */
+
+        // Update view statistics when new data is loaded
         table.on('xhr', function(e, settings, json) {
             if (json) {
                 updateViewStatistics(json);
             }
         });
 
-        // Re-position tooltips on window scroll and resize
+        // Debounce timers to optimize performance during rapid events
         let scrollTimeout;
         let resizeTimeout;
 
+        /**
+         * Repositions all tooltips to ensure proper visibility
+         * Called after viewport changes to maintain tooltip positioning
+         */
         function repositionTooltips() {
             populateAllBadges();
         }
 
+        // Handle window scroll events with debouncing for performance
         $(window).on('scroll', function() {
             clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(repositionTooltips, 100);
+            scrollTimeout = setTimeout(repositionTooltips, 100); // 100ms delay
         });
 
+        // Handle window resize events to maintain tooltip positioning
         $(window).on('resize', function() {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(repositionTooltips, 100);
+            resizeTimeout = setTimeout(repositionTooltips, 100); // 100ms delay
         });
 
-        // Also reposition on table scroll
+        // Handle table-specific scroll events for tooltip visibility
         $('.table-responsive').on('scroll', function() {
             clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(repositionTooltips, 100);
+            scrollTimeout = setTimeout(repositionTooltips, 100); // 100ms delay
         });
     </script>
 @endsection
