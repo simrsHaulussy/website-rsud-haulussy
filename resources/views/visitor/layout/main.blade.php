@@ -79,19 +79,40 @@
         font-weight: 500;
     }
 
+    /* Mobile Responsive Styles */
     @media (max-width: 768px) {
         .nav-item {
             margin-bottom: 20px;
             margin-right: 0px;
         }
 
+        /* Preloader Configuration */
         #preloader {
-            background: #fff url(/visitor/assets/img/gif/load.gif) no-repeat center center;
-            background-size: 15%;
+            background: #ffffff;
             height: 100vh;
             width: 100%;
             position: fixed;
             z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease-in-out;
+            opacity: 1;
+        }
+
+        #preloader.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Lottie Animation Container */
+        #preloader .lottie-container {
+            transition: opacity 0.4s ease-in-out;
+            opacity: 1;
+        }
+
+        #preloader.fade-out .lottie-container {
+            opacity: 0;
         }
 
         .small-margin {
@@ -100,19 +121,40 @@
     }
 
 
+    /* Desktop Styles */
     @media (min-width: 991px) {
         .nav-item {
             margin-bottom: 20px;
             margin-right: 0px;
         }
 
+        /* Preloader Configuration */
         #preloader {
-            background: #fff url(/visitor/assets/img/gif/load.gif) no-repeat center center;
-            background-size: 5%;
+            background: #ffffff;
             height: 100vh;
             width: 100%;
             position: fixed;
             z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease-in-out;
+            opacity: 1;
+        }
+
+        #preloader.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Lottie Animation Container */
+        #preloader .lottie-container {
+            transition: opacity 0.4s ease-in-out;
+            opacity: 1;
+        }
+
+        #preloader.fade-out .lottie-container {
+            opacity: 0;
         }
 
         .text-main {
@@ -148,7 +190,7 @@
         align-items: center;
     }
 
-    /* new 30jan2025 */
+    /* Notification Animation */
     .notif {
     color: red;
     font-size: 14px;
@@ -241,7 +283,19 @@
 </style>
 
 <body>
-    <div id="preloader"></div>
+    <!-- Preloader Container -->
+    <div id="preloader">
+        <div class="lottie-container">
+            <dotlottie-wc
+                src="https://lottie.host/a90b4165-03be-4fab-8c00-ec0e565d1cd3/Wss31UL78G.lottie"
+                style="width: 300px; height: 300px; max-width: 80vw; max-height: 80vh;"
+                autoplay
+                loop
+                speed="1"
+                renderer="svg"
+            ></dotlottie-wc>
+        </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal" id="myModal">
@@ -262,7 +316,7 @@
     <main class="main" id="top">
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('visitor/assets/img/gallery/rs.png') }}" alt="logo" style="max-height: 85px" />
+                <img src="{{ asset('visitor/assets/img/gallery/rsud_logo_christmas1.png') }}" alt="logo" style="max-height: 85px" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -523,6 +577,9 @@
     <!--    End of Main Content-->
     <!-- ===============================================-->
 
+    <!-- External: DotLottie Animation Library -->
+    <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js" type="module"></script>
+
     <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
@@ -545,21 +602,31 @@
     <script src="{{ asset('visitor/src/js/app.js') }}"></script>
     <script>
         var loader = document.querySelector("#preloader");
+        var minLoadTime = 3000;
 
         window.addEventListener("load", function() {
             setTimeout(function() {
-                loader.style.display = 'none';
-            }, 1000);
+                hideLoader();
+            }, minLoadTime);
         });
 
         setTimeout(function() {
-            console.log("Executed after 1 second");
-        }, 1000);
+            if (loader.style.display !== 'none') {
+                hideLoader();
+            }
+        }, minLoadTime + 1000);
+
+        function hideLoader() {
+            loader.classList.add('fade-out');
+            setTimeout(function() {
+                loader.style.display = 'none';
+            }, 600);
+        }
     </script>
 
         @yield('script')
 
-    <!-- Script JavaScript untuk menampilkan modal saat halaman dimuat -->
+    <!-- Disabled: Modal Auto-load Script -->
      {{-- <script>
         $(document).ready(function() {
             $("#myModal").modal("show");

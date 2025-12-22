@@ -38,7 +38,7 @@
 <body>
     <div class="under-construction">
         <div class="logo">
-            <a href="/"><img src="{{ asset('visitor/assets/img/gallery/rs.png') }}" alt="Logo"></a>
+            <a href="/"><img src="{{ asset('visitor/assets/img/gallery/rsud_logo_christmas1.png') }}" alt="Logo"></a>
         </div>
         <h2>Halaman Ini Sedang Dalam Pengembangan</h2>
         <p>Kami sedang membuat halaman ini untuk memberikan pengalaman terbaik kepada Anda.</p>
