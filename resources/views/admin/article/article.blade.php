@@ -192,13 +192,13 @@
        /* Page-specific styles if needed */
    }
 
-   /* Article Statistics Component */
+   /* Article Statistics Component - Match existing design system */
    .article-stats-section {
-       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-       border-radius: 12px;
-       padding: 1.5rem;
+       background: linear-gradient(to right, #4299e1, #7f9cf5);
+       border-radius: 8px;
+       padding: 18px 25px;
        margin-bottom: 1.5rem;
-       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
    }
 
    .article-stats-section__header {
@@ -206,23 +206,28 @@
        justify-content: space-between;
        align-items: center;
        margin-bottom: 0;
+       line-height: 1;
    }
 
    .article-stats-section__info {
        display: flex;
        align-items: center;
-       gap: 0.5rem;
+       gap: 0.75rem;
    }
 
    .article-stats-section__info-icon {
-       color: rgba(255, 255, 255, 0.8);
+       color: rgba(255, 255, 255, 0.9);
        font-size: 1.1rem;
+       display: flex;
+       align-items: center;
    }
 
    .article-stats-section__info-text {
-       color: rgba(255, 255, 255, 0.9);
-       font-size: 0.875rem;
+       color: rgba(255, 255, 255, 0.95);
+       font-size: 0.9rem;
        margin: 0;
+       display: flex;
+       align-items: center;
    }
 
    .article-stats-section__info-value {
@@ -234,18 +239,26 @@
    /* Article Filter Component */
    .article-filter-section {
        margin-bottom: 1rem;
+       margin-left: 0;
    }
 
    .article-filter-section__control-group {
        display: flex;
-       align-items: center;
-       gap: 0.5rem;
+       align-items: baseline;
+       gap: 0.75rem;
+       margin-top: 15px;
+   }
+
+   .article-filter-section__dropdown {
+       height: 38px;
+       line-height: 1.5;
+       vertical-align: baseline;
    }
 
    .article-filter-section__label {
-       color: #495057;
+       color: rgba(255, 255, 255, 0.95);
        font-weight: 500;
-       font-size: 0.875rem;
+       font-size: 0.9rem;
        margin: 0;
        white-space: nowrap;
    }
@@ -254,8 +267,24 @@
        min-width: 180px;
        font-size: 0.875rem;
        border-radius: 6px;
-       border: 1px solid #dee2e6;
-       padding: 0.375rem 0.75rem;
+       border: 1px solid rgba(255, 255, 255, 0.3);
+       padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+       background-color: rgba(255, 255, 255, 0.95);
+       color: #2c3e50;
+       font-weight: 500;
+       transition: all 0.15s ease-in-out;
+   }
+
+   .article-filter-section__dropdown:focus {
+       border-color: rgba(255, 255, 255, 0.8);
+       background-color: #ffffff;
+       box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.3);
+       outline: 0;
+   }
+
+   .article-filter-section__dropdown option {
+       background-color: #ffffff;
+       color: #2c3e50;
    }
 
    /* Article Table Component */
@@ -274,29 +303,274 @@
        transition: transform 0.2s ease-in-out;
    }
 
+   .article-data-table__badge i {
+       font-size: 0.8em;
+       margin-right: 4px;
+   }
+
    .article-data-table__badge:hover {
        transform: scale(1.05);
    }
 
-   /* Views Badge Variants (State-based) */
+   /* Views Badge Variants (State-based) - Improved Contrast */
    .article-data-table__badge--views-low {
-       background-color: #d4edda;
-       color: #155724;
+       background-color: #e3f2fd;
+       color: #0d47a1;
+       border: 1px solid #bbdefb;
+   }
+
+   .article-data-table__badge--views-low i {
+       color: #0d47a1;
    }
 
    .article-data-table__badge--views-medium {
-       background-color: #d1ecf1;
-       color: #0c5460;
+       background-color: #e8f5e8;
+       color: #1b5e20;
+       border: 1px solid #c8e6c9;
+   }
+
+   .article-data-table__badge--views-medium i {
+       color: #1b5e20;
    }
 
    .article-data-table__badge--views-high {
-       background-color: #fff3cd;
-       color: #856404;
+       background-color: #fff8e1;
+       color: #e65100;
+       border: 1px solid #ffe0b2;
+   }
+
+   .article-data-table__badge--views-high i {
+       color: #e65100;
    }
 
    .article-data-table__badge--views-viral {
-       background-color: #f8d7da;
-       color: #721c24;
+       background-color: #ffebee;
+       color: #b71c1c;
+       border: 1px solid #ffcdd2;
+   }
+
+   .article-data-table__badge--views-viral i {
+       color: #b71c1c;
+   }
+
+   /* Custom Tooltip Styling */
+   .custom-tooltip {
+       position: absolute;
+       bottom: 100%;
+       left: 50%;
+       transform: translateX(-50%);
+       background: #1a1a1a;
+       color: white;
+       padding: 8px 12px;
+       border-radius: 6px;
+       font-size: 0.75rem;
+       white-space: nowrap;
+       opacity: 0;
+       visibility: hidden;
+       transition: opacity 0.3s ease, visibility 0.3s ease;
+       z-index: 1000;
+       pointer-events: none;
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+       max-width: 200px;
+       white-space: normal;
+       margin-bottom: 8px;
+   }
+
+   .custom-tooltip::after {
+       content: '';
+       position: absolute;
+       top: 100%;
+       left: 50%;
+       transform: translateX(-50%);
+       border: 6px solid transparent;
+       border-top-color: #1a1a1a;
+   }
+
+   /* Enhanced Tooltip content styling */
+   .custom-tooltip__title {
+       font-weight: 600;
+       margin-bottom: 6px;
+       color: #fff;
+       border-bottom: 1px solid #333;
+       padding-bottom: 4px;
+       font-size: 0.8rem;
+   }
+
+   .custom-tooltip__row {
+       display: flex;
+       justify-content: space-between;
+       margin: 3px 0;
+       align-items: center;
+   }
+
+   .custom-tooltip__label {
+       color: #ccc;
+       font-size: 0.7rem;
+   }
+
+   .custom-tooltip__value {
+       font-weight: 500;
+       color: #fff;
+       font-size: 0.75rem;
+   }
+
+   .custom-tooltip__divider {
+       height: 1px;
+       background: #444;
+       margin: 6px 0;
+   }
+
+   .custom-tooltip__calculation {
+       background: rgba(255, 255, 255, 0.05);
+       padding: 6px 8px;
+       border-radius: 4px;
+       margin-top: 4px;
+   }
+
+   .custom-tooltip__formula {
+       font-size: 0.65rem;
+       color: #aaa;
+       margin-bottom: 4px;
+       font-style: italic;
+   }
+
+   .custom-tooltip__example {
+       font-size: 0.7rem;
+       color: #fff;
+       font-weight: 500;
+   }
+
+   .custom-tooltip__category {
+       margin-top: 4px;
+   }
+
+   .custom-tooltip__category-title {
+       font-weight: 600;
+       color: #fff;
+       margin-bottom: 3px;
+       font-size: 0.75rem;
+   }
+
+   .custom-tooltip__category-meaning {
+       font-size: 0.65rem;
+       color: #ddd;
+       margin-bottom: 4px;
+       font-style: italic;
+   }
+
+   .custom-tooltip__characteristics {
+       font-size: 0.6rem;
+       color: #bbb;
+       line-height: 1.3;
+   }
+
+   /* All Categories Display */
+   .custom-tooltip__all-categories {
+       margin: 6px 0;
+   }
+
+   .custom-tooltip__category-item {
+       display: flex;
+       align-items: center;
+       margin: 3px 0;
+       padding: 2px 4px;
+       border-radius: 3px;
+   }
+
+   .custom-tooltip__category-item--current {
+       background: rgba(255, 255, 255, 0.1);
+       border: 1px solid rgba(255, 255, 255, 0.2);
+   }
+
+   .custom-tooltip__color-indicator {
+       width: 12px;
+       height: 12px;
+       border-radius: 50%;
+       margin-right: 8px;
+       border: 1px solid rgba(0, 0, 0, 0.2);
+   }
+
+   .custom-tooltip__color--red {
+       background-color: #ffebee;
+       border-color: #ffcdd2;
+   }
+
+   .custom-tooltip__color--orange {
+       background-color: #fff8e1;
+       border-color: #ffe0b2;
+   }
+
+   .custom-tooltip__color--green {
+       background-color: #e8f5e8;
+       border-color: #c8e6c9;
+   }
+
+   .custom-tooltip__color--blue {
+       background-color: #e3f2fd;
+       border-color: #bbdefb;
+   }
+
+   .custom-tooltip__category-info {
+       font-size: 0.65rem;
+       color: #ddd;
+   }
+
+   .custom-tooltip__current-category {
+       margin-top: 4px;
+       padding: 4px;
+       background: rgba(255, 255, 255, 0.05);
+       border-radius: 4px;
+   }
+
+   /* Tooltip trigger styling */
+   .article-stats-section__info-tooltip-trigger,
+   .views-tooltip-trigger {
+       position: relative;
+       cursor: help;
+   }
+
+   .article-stats-section__info-tooltip-trigger:hover .custom-tooltip,
+   .views-tooltip-trigger:hover .custom-tooltip {
+       opacity: 1;
+       visibility: visible;
+   }
+
+   /* Specific tooltip variants */
+   .custom-tooltip--stats {
+       min-width: 220px;
+       max-width: 250px;
+   }
+
+   .custom-tooltip--badge {
+       min-width: 200px;
+       max-width: 220px;
+       left: 50%;
+       transform: translateX(-50%);
+   }
+
+   /* Tooltip positioning untuk badges di bagian atas */
+   .custom-tooltip--badge.tooltip-bottom {
+       bottom: auto;
+       top: 100%;
+       margin-bottom: 0;
+       margin-top: 8px;
+   }
+
+   .custom-tooltip--badge.tooltip-bottom::after {
+       top: auto;
+       bottom: 100%;
+       border-top-color: transparent;
+       border-bottom-color: #1a1a1a;
+   }
+
+   /* Enhanced hover effects */
+   .article-stats-section__info-tooltip-trigger:hover {
+       opacity: 0.8;
+       transition: opacity 0.2s ease;
+   }
+
+   .views-tooltip-trigger:hover {
+       transform: scale(1.05);
    }
 
    /* Utility Classes (Global, reusable) */
@@ -304,22 +578,54 @@
    .u-font-weight-600 { font-weight: 600 !important; }
    .u-font-weight-500 { font-weight: 500 !important; }
 
-   /* Responsive Design */
+   /* Responsive Design - Better Mobile Experience */
    @media (max-width: 768px) {
+       .article-stats-section {
+           padding: 1rem 1.25rem;
+           margin-bottom: 1rem;
+       }
+
        .article-stats-section__header {
            flex-direction: column;
            gap: 1rem;
            align-items: flex-start;
        }
 
+       .article-stats-section__info {
+           flex-direction: column;
+           align-items: flex-start;
+           gap: 0.5rem;
+       }
+
+       .article-filter-section {
+           align-self: flex-start;
+           width: 100%;
+       }
+
        .article-filter-section__control-group {
            width: 100%;
-           justify-content: space-between;
+           flex-direction: column;
+           align-items: flex-start;
+           gap: 0.75rem;
        }
 
        .article-filter-section__dropdown {
-           flex: 1;
-           max-width: 200px;
+           width: 100%;
+           max-width: none;
+       }
+
+       .article-filter-section__label {
+           margin-bottom: 0.25rem;
+       }
+   }
+
+   @media (max-width: 576px) {
+       .article-stats-section__info-text {
+           font-size: 0.85rem;
+       }
+
+       .article-filter-section__label {
+           font-size: 0.85rem;
        }
    }
 
@@ -364,7 +670,7 @@
                         <div class="article-stats-section">
                             <div class="article-stats-section__header">
                                 <!-- Statistics Info -->
-                                <div class="article-stats-section__info">
+                                <div class="article-stats-section__info article-stats-section__info-tooltip-trigger">
                                     <i class="fas fa-eye article-stats-section__info-icon"></i>
                                     <div class="article-stats-section__info-text">
                                         Total Views:
@@ -377,6 +683,7 @@
                                         Rata-rata:
                                         <span id="avgViews" class="article-stats-section__info-value">-</span>
                                     </div>
+                                    <div class="custom-tooltip custom-tooltip--stats">Loading...</div>
                                 </div>
 
                                 <!-- Filter Control -->
@@ -429,6 +736,155 @@
     <script src="//cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
     <script>
+        // Custom Tooltip Functions
+        function formatNumber(num) {
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        function getBadgeInfo(views, badgeClass) {
+            const infoMap = {
+                'article-data-table__badge--views-low': {
+                    category: '🔵 Low Engagement',
+                    range: '0-99 views',
+                    meaning: 'Artikel baru atau kurang menarik minat pembaca',
+                    characteristics: '• Baru dipublish\n• Topik kurang populer\n• Perlu promosi lebih'
+                },
+                'article-data-table__badge--views-medium': {
+                    category: '🟢 Moderate Engagement',
+                    range: '100-499 views',
+                    meaning: 'Artikel dengan performa standar yang sudah ada pembaca',
+                    characteristics: '• Pembaca reguler\n• Topik menarik\n• Performa normal'
+                },
+                'article-data-table__badge--views-high': {
+                    category: '🟠 High Performing',
+                    range: '500-1999 views',
+                    meaning: 'Artikel populer yang banyak menarik minat pembaca',
+                    characteristics: '• Konten berkualitas\n• SEO baik\n• Banyak dishare'
+                },
+                'article-data-table__badge--views-viral': {
+                    category: '🔴 Viral Content',
+                    range: '2000+ views',
+                    meaning: 'Artikel sangat populer yang sedang trending atau sangat relevan',
+                    characteristics: '• Sedang trending\n• Topik hangat\n• Viral di media sosial'
+                }
+            };
+            return infoMap[badgeClass] || { category: 'Unknown', range: 'N/A', meaning: 'Views information', characteristics: '' };
+        }
+
+        function populateStatsTooltip(totalViews, avgViews, articleCount) {
+            // Format rata-rata sama seperti yang ditampilkan di luar
+            const formattedAvg = avgViews % 1 !== 0 ? avgViews.toFixed(1) : avgViews.toString();
+
+            const tooltipContent = `
+                <div class="custom-tooltip__title">💡 Cara Perhitungan Statistik</div>
+                <div class="custom-tooltip__row">
+                    <span class="custom-tooltip__label">Total Views:</span>
+                    <span class="custom-tooltip__value">${totalViews.toLocaleString('id-ID')}</span>
+                </div>
+                <div class="custom-tooltip__row">
+                    <span class="custom-tooltip__label">Jumlah Artikel:</span>
+                    <span class="custom-tooltip__value">${articleCount}</span>
+                </div>
+                <div class="custom-tooltip__divider"></div>
+                <div class="custom-tooltip__calculation">
+                    <div class="custom-tooltip__formula">
+                        Rata-rata = Total Views ÷ Jumlah Artikel
+                    </div>
+                    <div class="custom-tooltip__example">
+                        ${totalViews.toLocaleString('id-ID')} ÷ ${articleCount} = <strong>${formattedAvg}</strong> views/artikel
+                    </div>
+                </div>
+            `;
+
+            const tooltipElement = document.querySelector('.article-stats-section__info-tooltip-trigger .custom-tooltip');
+            if (tooltipElement) {
+                tooltipElement.innerHTML = tooltipContent;
+            }
+        }
+
+        function populateBadgeTooltip(badgeElement, views, badgeClass) {
+            const tooltipContent = `
+                <div class="custom-tooltip__title">📈 Kategori Views</div>
+                <div class="custom-tooltip__row">
+                    <span class="custom-tooltip__label">Views Artikel Ini:</span>
+                    <span class="custom-tooltip__value">${views.toLocaleString('id-ID')}</span>
+                </div>
+                <div class="custom-tooltip__divider"></div>
+                <div class="custom-tooltip__all-categories">
+                    <div class="custom-tooltip__category-item ${badgeClass === 'article-data-table__badge--views-viral' ? 'custom-tooltip__category-item--current' : ''}">
+                        <span class="custom-tooltip__color-indicator custom-tooltip__color--red"></span>
+                        <span class="custom-tooltip__category-info">🔴 Viral Content: 2.000+</span>
+                    </div>
+                    <div class="custom-tooltip__category-item ${badgeClass === 'article-data-table__badge--views-high' ? 'custom-tooltip__category-item--current' : ''}">
+                        <span class="custom-tooltip__color-indicator custom-tooltip__color--orange"></span>
+                        <span class="custom-tooltip__category-info">🟠 High Performing: 500-1.999</span>
+                    </div>
+                    <div class="custom-tooltip__category-item ${badgeClass === 'article-data-table__badge--views-medium' ? 'custom-tooltip__category-item--current' : ''}">
+                        <span class="custom-tooltip__color-indicator custom-tooltip__color--green"></span>
+                        <span class="custom-tooltip__category-info">🟢 Moderate Engagement: 100-499</span>
+                    </div>
+                    <div class="custom-tooltip__category-item ${badgeClass === 'article-data-table__badge--views-low' ? 'custom-tooltip__category-item--current' : ''}">
+                        <span class="custom-tooltip__color-indicator custom-tooltip__color--blue"></span>
+                        <span class="custom-tooltip__category-info">🔵 Low Engagement: 0-99</span>
+                    </div>
+                </div>
+            `;
+
+            const tooltipElement = badgeElement.querySelector('.custom-tooltip');
+            if (tooltipElement) {
+                tooltipElement.innerHTML = tooltipContent;
+            }
+        }
+
+        function populateAllBadges() {
+            const badges = document.querySelectorAll('.views-tooltip-trigger');
+            badges.forEach(function(badge) {
+                // Extract data from the badge's inner text
+                const viewsText = badge.textContent.replace('Loading...', '').trim();
+                const viewsMatch = viewsText.match(/[\d.]+K?/);
+                if (viewsMatch) {
+                    const viewsTextValue = viewsMatch[0];
+                    let views = 0;
+                    if (viewsTextValue.includes('K')) {
+                        views = parseFloat(viewsTextValue.replace('K', '')) * 1000;
+                    } else {
+                        views = parseInt(viewsTextValue);
+                    }
+
+                    // Determine badge class
+                    let badgeClass = 'article-data-table__badge--views-low';
+                    if (views >= 2000) {
+                        badgeClass = 'article-data-table__badge--views-viral';
+                    } else if (views >= 500) {
+                        badgeClass = 'article-data-table__badge--views-high';
+                    } else if (views >= 100) {
+                        badgeClass = 'article-data-table__badge--views-medium';
+                    }
+
+                    populateBadgeTooltip(badge, views, badgeClass);
+
+                    // Determine tooltip position (top or bottom)
+                    const tooltip = badge.querySelector('.custom-tooltip');
+                    if (tooltip) {
+                        const rect = badge.getBoundingClientRect();
+                        const tooltipHeight = 120; // Estimated tooltip height
+                        const spaceAbove = rect.top;
+                        const spaceBelow = window.innerHeight - rect.bottom;
+
+                        // If not enough space above, show tooltip below
+                        if (spaceAbove < tooltipHeight && spaceBelow > tooltipHeight) {
+                            tooltip.classList.add('tooltip-bottom');
+                        } else {
+                            tooltip.classList.remove('tooltip-bottom');
+                        }
+                    }
+                }
+            });
+        }
+
         // Initialize DataTable
         var table = $('.data-table').DataTable({
             dom: "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
@@ -510,15 +966,15 @@
                         var views = row.views || 0;
                         var badgeVariant = 'article-data-table__badge--views-low';
 
-                        if (views >= 1000) {
-                            badgeVariant = 'article-data-table__badge--views-viral'; // Viral content
+                        if (views >= 2000) {
+                            badgeVariant = 'article-data-table__badge--views-viral'; // Viral content (2000+)
                         } else if (views >= 500) {
-                            badgeVariant = 'article-data-table__badge--views-high'; // High performing
-                        } else if (views >= 50) {
-                            badgeVariant = 'article-data-table__badge--views-medium'; // Moderate views
+                            badgeVariant = 'article-data-table__badge--views-high'; // High performing (500-1999)
+                        } else if (views >= 100) {
+                            badgeVariant = 'article-data-table__badge--views-medium'; // Moderate views (100-499)
                         }
 
-                        return '<span class="article-data-table__badge ' + badgeVariant + '">' + data + '</span>';
+                        return '<span class="article-data-table__badge views-tooltip-trigger ' + badgeVariant + '"><i class="fas fa-eye" style="margin-right: 4px;"></i>' + data + '<div class="custom-tooltip custom-tooltip--badge">Loading...</div></span>';
                     }
                 },
                 {
@@ -531,6 +987,9 @@
             drawCallback: function() {
                 // Apply styles to action buttons after table draw
                 styleActionButtons();
+
+                // Populate tooltips for all badges after table draw
+                populateAllBadges();
             }
         });
 
@@ -662,6 +1121,7 @@
             // Use server-calculated statistics instead of client-side
             var totalViews = json.total_views_all || 0;
             var avgViews = Math.round((json.avg_views_all || 0) * 10) / 10; // Round to 1 decimal place like dashboard
+            var articleCount = json.recordsTotal || 0;
 
             // Format numbers to match dashboard exactly
             function formatNumber(num) {
@@ -672,6 +1132,9 @@
             $('#totalViews').text(formatNumber(totalViews));
             // For average, show with 1 decimal place like dashboard
             $('#avgViews').text(avgViews % 1 !== 0 ? avgViews.toFixed(1) : avgViews.toString());
+
+            // Populate statistics tooltip
+            populateStatsTooltip(totalViews, avgViews, articleCount);
         }
 
         // Update statistics on initial load and after each draw
