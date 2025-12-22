@@ -563,6 +563,30 @@
        border-bottom-color: #1a1a1a;
    }
 
+   /* Fix untuk tooltip yang terpotong di tabel */
+   .table-responsive {
+       overflow: visible !important;
+   }
+
+   /* Pastikan container tidak memotong tooltip */
+   .article-data-table td {
+       position: relative;
+       overflow: visible !important;
+   }
+
+   /* Z-index yang lebih tinggi untuk memastikan tooltip muncul di atas elemen lain */
+   .custom-tooltip--badge {
+       z-index: 9999 !important;
+   }
+
+   /* Tambahan untuk memastikan tooltip terlihat di layar */
+   @media screen {
+       .custom-tooltip--badge {
+           max-width: 280px !important;
+           word-wrap: break-word;
+       }
+   }
+
    /* Enhanced hover effects */
    .article-stats-section__info-tooltip-trigger:hover {
        opacity: 0.8;
@@ -869,16 +893,56 @@
                     // Determine tooltip position (top or bottom)
                     const tooltip = badge.querySelector('.custom-tooltip');
                     if (tooltip) {
+                        // Get the badge position relative to the viewport
                         const rect = badge.getBoundingClientRect();
-                        const tooltipHeight = 120; // Estimated tooltip height
+                        const tableContainer = badge.closest('.table-responsive');
+                        const containerRect = tableContainer ? tableContainer.getBoundingClientRect() : null;
+
+                        // Check if badge is in the first few rows
+                        const row = badge.closest('tr');
+                        const isNearTop = row && row.rowIndex <= 2; // First 2 rows
+
+                        const tooltipHeight = 160; // Increased estimated tooltip height
                         const spaceAbove = rect.top;
                         const spaceBelow = window.innerHeight - rect.bottom;
 
-                        // If not enough space above, show tooltip below
-                        if (spaceAbove < tooltipHeight && spaceBelow > tooltipHeight) {
+                        // Force tooltip to show below for first few rows or if not enough space above
+                        if (isNearTop || spaceAbove < tooltipHeight + 20) { // Added 20px buffer
                             tooltip.classList.add('tooltip-bottom');
+
+                            // Adjust positioning for bottom tooltips to avoid viewport edge
+                            if (spaceBelow < tooltipHeight) {
+                                // If also not enough space below, adjust positioning
+                                const viewportCenter = window.innerHeight / 2;
+                                if (rect.top < viewportCenter) {
+                                    // Badge is in upper half, force show below
+                                    tooltip.style.maxHeight = Math.min(spaceBelow - 10, 200) + 'px';
+                                    tooltip.style.overflowY = 'auto';
+                                }
+                            }
                         } else {
                             tooltip.classList.remove('tooltip-bottom');
+                        }
+
+                        // Ensure tooltip stays within viewport horizontally
+                        const tooltipWidth = 220;
+                        const spaceLeft = rect.left;
+                        const spaceRight = window.innerWidth - rect.right;
+
+                        if (spaceLeft < tooltipWidth / 2) {
+                            // Not enough space on left, align to left edge
+                            tooltip.style.left = '0';
+                            tooltip.style.transform = 'translateX(0)';
+                        } else if (spaceRight < tooltipWidth / 2) {
+                            // Not enough space on right, align to right edge
+                            tooltip.style.left = 'auto';
+                            tooltip.style.right = '0';
+                            tooltip.style.transform = 'translateX(0)';
+                        } else {
+                            // Center position
+                            tooltip.style.left = '50%';
+                            tooltip.style.right = 'auto';
+                            tooltip.style.transform = 'translateX(-50%)';
                         }
                     }
                 }
@@ -1142,6 +1206,30 @@
             if (json) {
                 updateViewStatistics(json);
             }
+        });
+
+        // Re-position tooltips on window scroll and resize
+        let scrollTimeout;
+        let resizeTimeout;
+
+        function repositionTooltips() {
+            populateAllBadges();
+        }
+
+        $(window).on('scroll', function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(repositionTooltips, 100);
+        });
+
+        $(window).on('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(repositionTooltips, 100);
+        });
+
+        // Also reposition on table scroll
+        $('.table-responsive').on('scroll', function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(repositionTooltips, 100);
         });
     </script>
 @endsection
