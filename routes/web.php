@@ -227,33 +227,19 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::middleware('admin.event')->group(function () {
-        // Event Route
         Route::get('/event', [EventController::class, 'index'])->name('event.index');
         Route::post('/event', [EventController::class, 'create']);
         Route::patch('/event/{id}', [EventController::class, 'update']);
         Route::delete('/event/{id}', [EventController::class, 'destroy']);
         Route::get('/event/{id}', [EventController::class, 'show'])->name('event.detail');
-        // Event Picture Route
         Route::post('/event-picture/{id}', [EventPictureController::class, 'store']);
         Route::delete('/event-picture/{id}', [EventPictureController::class, 'destroy']);
+    });
 
-        // =====================================================
-        // RESOURCE ROUTE UNTUK MANAJEMEN IKLAN
-        // =====================================================
+    // Iklan Management Routes - Super Admin & Admin only
+    Route::middleware('admin.iklan')->group(function () {
         Route::resource('iklan', IklanController::class)->except(['show']);
-        // URL akan menjadi: /iklan, /iklan/create, /iklan/{iklan}/edit
-        // Nama route akan menjadi: iklan.index, iklan.create, iklan.edit, dll.
-
-        // ROUTE UNTUK TOGGLE STATUS IKLAN
         Route::patch('iklan/{iklan}/toggle-status', [IklanController::class, 'toggleStatus'])->name('iklan.toggle-status');
-        // URL akan menjadi: /iklan/{id}/toggle-status
-        // Jika Anda ingin URL nya menjadi /admin/iklan, maka grup luar ('auth')
-        // perlu memiliki prefix 'admin'. Tapi sepertinya struktur Anda saat ini
-        // URL adminnya langsung tanpa prefix /admin di URL, tapi dilindungi middleware.
-        // Jadi, URL /iklan akan dilindungi oleh middleware 'auth' dan 'admin'.
-        // Ini sudah benar sesuai struktur Anda.
-        // =====================================================
-
     });
 
     Route::middleware('admin.bed')->group(function () {

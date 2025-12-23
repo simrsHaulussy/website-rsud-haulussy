@@ -74,5 +74,6 @@ class Kernel extends HttpKernel
         'admin.news' => \App\Http\Middleware\AdminNews::class,
         'admin.pengaduan' => \App\Http\Middleware\AdminPengaduan::class,
         'admin.event' => \App\Http\Middleware\AdminEvent::class,
+        'admin.iklan' => \App\Http\Middleware\AdminIklan::class,
     ];
 }
