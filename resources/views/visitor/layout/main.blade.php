@@ -626,6 +626,9 @@
 
         @yield('script')
 
+    <!-- Snowfall Effect Component -->
+    @include('visitor.components.snowfall')
+
     <!-- Disabled: Modal Auto-load Script -->
      {{-- <script>
         $(document).ready(function() {

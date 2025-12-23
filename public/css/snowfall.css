@@ -1,0 +1,90 @@
+/**
+ * Snowfall Effect CSS
+ * Minimal styling for canvas snowfall animation
+ */
+
+#snowfall-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+    overflow: hidden;
+}
+
+#snowfall-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+#snowfall-canvas.paused {
+    opacity: 0;
+}
+
+/* Performance optimizations */
+#snowfall-canvas {
+    will-change: opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    #snowfall-canvas {
+        display: none;
+    }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    #snowfall-canvas {
+        opacity: 0.8;
+    }
+}
+
+@media (max-width: 576px) {
+    #snowfall-canvas {
+        opacity: 0.7;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    #snowfall-canvas {
+        opacity: 0.9;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    #snowfall-canvas {
+        opacity: 0.9;
+    }
+}
+
+/* Print styles - hide snowfall when printing */
+@media print {
+    #snowfall-container,
+    #snowfall-canvas {
+        display: none !important;
+    }
+}
+
+/* Ensure snowfall doesn't interfere with interactive elements */
+#snowfall-canvas {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
