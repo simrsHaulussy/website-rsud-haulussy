@@ -189,6 +189,10 @@ Route::middleware(['auth'])->group(function () {
         // Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('prevent.back.history')->name('admin.dashboard');
 
+        // Visual Effects Settings
+        Route::get('/settings/visual-effects', [App\Http\Controllers\Admin\VisualEffectsController::class, 'index'])->name('visual-effects.index');
+        Route::post('/settings/visual-effects', [App\Http\Controllers\Admin\VisualEffectsController::class, 'update'])->name('visual-effects.update');
+
         // Download Route
         // File Route
         Route::get('/download', [DownloadController::class, 'index'])->name('download.index');

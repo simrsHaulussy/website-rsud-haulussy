@@ -654,6 +654,15 @@
                                     </p>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('visual-effects.index') }}" class="nav-link {{ request()->is('settings/visual-effects*') ? 'active' : '' }}">
+                                    <i class="nav-icon material-icons-round">auto_awesome</i>
+                                    <p>
+                                        Visual Effects
+                                    </p>
+                                </a>
+                            </li>
                         @endif
 
                         @if (Auth::check() && (Auth::user()->role_id === 1 || Auth::user()->role_id === 2 || Auth::user()->role_id === 3))

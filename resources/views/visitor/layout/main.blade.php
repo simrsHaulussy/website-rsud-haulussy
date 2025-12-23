@@ -1,3 +1,13 @@
+@php
+    use Illuminate\Support\Facades\DB;
+    use Illuminate\Support\Facades\Cache;
+
+    // Load visual effects settings from database with caching
+    $visualEffects = Cache::remember('visual_effects', 3600, function () {
+        return DB::table('visual_effects_settings')->pluck('setting_value', 'setting_key');
+    });
+@endphp
+
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
@@ -316,7 +326,7 @@
     <main class="main" id="top">
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('visitor/assets/img/gallery/rsud_logo_christmas1.png') }}" alt="logo" style="max-height: 85px" />
+                <img src="{{ asset('visitor/assets/img/gallery/rsud_logo_christmas2.png') }}" alt="logo" style="max-height: 85px" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -401,7 +411,9 @@
             </div>
             </div>
         </nav>
-        <div id="particles-js"></div>
+        @if(($visualEffects['particles_enabled'] ?? '1') == '1')
+            <div id="particles-js"></div>
+        @endif
         <section class="pb-0" id="home">
             <div class="bg-holder bg-size"
                 style="background-image: url(/visitor/assets/img/gallery/hero-bg.png);background-position: top center;background-size: cover;">
@@ -598,8 +610,10 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="{{ asset('visitor/vendors/particles/particles.js') }}"></script>
-    <script src="{{ asset('visitor/src/js/app.js') }}"></script>
+    @if(($visualEffects['particles_enabled'] ?? '1') == '1')
+        <script src="{{ asset('visitor/vendors/particles/particles.js') }}"></script>
+        <script src="{{ asset('visitor/src/js/app.js') }}"></script>
+    @endif
     <script>
         var loader = document.querySelector("#preloader");
         var minLoadTime = 3000;
@@ -627,7 +641,9 @@
         @yield('script')
 
     <!-- Snowfall Effect Component -->
-    @include('visitor.components.snowfall')
+    @if(($visualEffects['snowfall_enabled'] ?? '1') == '1')
+        @include('visitor.components.snowfall', ['config' => $visualEffects])
+    @endif
 
     <!-- Disabled: Modal Auto-load Script -->
      {{-- <script>

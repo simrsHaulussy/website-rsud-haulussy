@@ -2,34 +2,38 @@
     /**
      * Snowfall Component Configuration
      *
-     * Easy customization options for the snowfall effect
+     * Configuration sourced from database visual effects settings
      */
-    $shouldShowSnow = true; // Set to false to completely disable
+
+    // Extract settings from database config array
+    $maxSnowflakes = isset($config['max_snowflakes']) ? (int)$config['max_snowflakes'] : 50;
+    $snowfallMonths = isset($config['snowfall_months']) ? $config['snowfall_months'] : '11,12,1';
+
+    // Convert months string to array
+    $monthsArray = array_map('intval', explode(',', $snowfallMonths));
 
     // Configuration object passed to JavaScript
     $snowfallConfig = [
-        'maxSnowflakes' => 50,           // Maximum number of snowflakes (recommended: 40-60)
-        'autoActivate' => true,          // Automatically activate based on months
-        'months' => [11, 12, 1],        // Months to auto-activate (Nov, Dec, Jan)
-        'manualOverride' => null,       // Manual override: true/false
-        'zIndex' => 9998,               // CSS z-index (keep high but below modals)
+        'maxSnowflakes' => $maxSnowflakes,
+        'autoActivate' => true,
+        'months' => $monthsArray,
+        'manualOverride' => null,
+        'zIndex' => 9998,
     ];
 
     // Environment-specific adjustments
     if (app()->environment() === 'local') {
-        // Development environment - lower performance impact
-        $snowfallConfig['maxSnowflakes'] = 30;
+        $snowfallConfig['maxSnowflakes'] = min($maxSnowflakes, 30);
     }
 
-      // Mobile optimization using user agent detection
+    // Mobile optimization using user agent detection
     $isMobile = preg_match('/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone|IEMobile|Opera Mini)/i', request()->userAgent());
     if ($isMobile) {
-        $snowfallConfig['maxSnowflakes'] = 35;
+        $snowfallConfig['maxSnowflakes'] = min($maxSnowflakes, 35);
     }
 @endphp
 
-@if($shouldShowSnow)
-    <!-- Snowfall CSS -->
+<!-- Snowfall CSS -->
     <link href="{{ asset('css/snowfall.css') }}" rel="stylesheet" />
 
     <!-- Snowfall Container -->
@@ -94,7 +98,6 @@
 
         })();
     </script>
-@endif
 
 @php
 /**
