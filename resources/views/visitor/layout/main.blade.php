@@ -297,7 +297,7 @@
     <div id="preloader">
         <div class="lottie-container">
             <dotlottie-wc
-                src="https://lottie.host/a90b4165-03be-4fab-8c00-ec0e565d1cd3/Wss31UL78G.lottie"
+                src="https://lottie.host/1a703b33-471e-4869-87ab-16a8d777b119/Rn6HjCLaPN.lottie"
                 style="width: 300px; height: 300px; max-width: 80vw; max-height: 80vh;"
                 autoplay
                 loop
@@ -326,7 +326,7 @@
     <main class="main" id="top">
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('visitor/assets/img/gallery/rsud_logo_christmas2.png') }}" alt="logo" style="max-height: 85px" />
+                <img src="{{ asset('visitor/assets/img/gallery/rsud_logo_newyear.png') }}" alt="logo" style="max-height: 85px" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -616,7 +616,7 @@
     @endif
     <script>
         var loader = document.querySelector("#preloader");
-        var minLoadTime = 3000;
+        var minLoadTime = 3500;
 
         window.addEventListener("load", function() {
             setTimeout(function() {
