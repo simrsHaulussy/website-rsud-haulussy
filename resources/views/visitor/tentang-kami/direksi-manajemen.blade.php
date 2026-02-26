@@ -25,7 +25,7 @@
             <div class="row justify-content-center">
                 <div class="col-10 col-sm-10 col-md-6 col-lg-4">
                     <div class="card custom-card">
-                        <h3 class="card-title text-center pt-3">Plt Direktur</h3>
+                        <h3 class="card-title text-center pt-3">Direktur</h3>
                         <img src="{{ asset('visitor/assets/img/gallery/direk_winny_bg.png') }}" class="card-img-top" alt="IGD">
                         <div class="card-body">
                             <h5 class="card-text text-secondary text-center">dr. Winny Natacia Leiwakabessy, Sp.PA, M.Kes</h5>
