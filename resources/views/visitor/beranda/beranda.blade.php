@@ -738,7 +738,7 @@
                     </div>
                 </div> --}}
 
-    
+
                 <div class="col-4 col-md-4 col-lg-2 text-xl-start mb-5">
                     <div class="d-flex flex-column align-items-center">
                         <div class="icon-box text-center">
@@ -788,10 +788,10 @@
             <div class="row align-items-center">
                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 order-lg-1 mb-5 mb-lg-0 text-center">
                     <img class="img-fluid rounded-circle" width="60%"
-                        src="{{ asset('visitor/assets/img/gallery/direktur_dr_Vita.png') }}" alt="..." />
+                        src="{{ asset('visitor/assets/img/gallery/dr_winny.png') }}" alt="..." />
                     <div class="text-center">
-                        <h4>Plt DIREKTUR</h4>
-                        <h5>dr. Novita Elevia Nikijuluw</h5>
+                        <h4>DIREKTUR</h4>
+                        <h5>dr. Winny Natacia Leiwakabessy, Sp.PA, M.Kes</h5>
                         <!-- <P>NIP 196807222001121001</P> -->
                     </div>
                 </div>

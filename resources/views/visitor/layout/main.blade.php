@@ -326,7 +326,7 @@
     <main class="main" id="top">
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('visitor/assets/img/gallery/rsud_logo_newyear.png') }}" alt="logo" style="max-height: 85px" />
+                <img src="{{ asset('visitor/assets/img/gallery/rs.png') }}" alt="logo" style="max-height: 85px" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
