@@ -10,7 +10,7 @@
         <img src="{{ asset('visitor/assets/img/diagram/Diagram Struktur Organisasi 2026.png') }}" alt=""
             width="100%" height="100%">
         <p class="text-danger">
-            <b>*Diperbarui 20 Februari 2026</b>
+            <b>*Diperbarui 26 Februari 2026</b>
         </p>
     </div>
 @endsection

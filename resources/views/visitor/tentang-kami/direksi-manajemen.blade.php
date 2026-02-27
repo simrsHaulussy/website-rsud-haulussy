@@ -53,7 +53,7 @@
                         <img src="{{ asset('visitor/assets/img/avatar/avatar_cewe_background.png') }}" class="card-img-top"
                             alt="IGD">
                         <div class="card-body">
-                            <h5 class="card-text text-secondary text-center">Julia Nancy de Queljoe, S.K.M</h5>
+                            <h5 class="card-text text-secondary text-center">Melsa Palijama, SE, MSi.</h5>
                         </div>
                     </div>
                 </div>
