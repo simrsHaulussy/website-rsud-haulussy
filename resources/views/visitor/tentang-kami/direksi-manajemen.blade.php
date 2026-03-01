@@ -253,7 +253,7 @@
                         <img src="{{ asset('visitor/assets/img/avatar/avatar_laki_background.png') }}"
                             class="card-img-top" alt="IGD">
                         <div class="card-body">
-                            <h5 class="card-text text-secondary text-center">Hengky Birahy, S.K.M.</h5>
+                            <h5 class="card-text text-secondary text-center">Anes Urlialy, S.K.M.</h5>
                         </div>
                     </div>
                 </div>
