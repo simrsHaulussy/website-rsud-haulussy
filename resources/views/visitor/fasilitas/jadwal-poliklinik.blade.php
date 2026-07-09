@@ -107,8 +107,15 @@
                 <tr>
                     <th scope="row"></th>
                     <td></td>
-                    <td>dr. Yosi Silalahi, Sp.S, M. Kes</td>
+                    <td>dr. Bertha Jean Que, Sp.S, M.Kes.</td>
                     <td>Kamis</td>
+                    <td>09.00 - selesai</td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td>dr. Semuel Alexander Wagiu, Sp.N</td>
+                    <td>Jumat</td>
                     <td>09.00 - selesai</td>
                 </tr>
                 {{-- end Klinik Syaraf --}}

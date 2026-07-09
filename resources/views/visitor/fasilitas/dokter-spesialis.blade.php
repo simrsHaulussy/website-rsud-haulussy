@@ -324,9 +324,11 @@
                         alt="Foto Dokter GG" id="doctor-image" />
                 </div> --}}
 
-                <button class="accordion btn btn-primary" onclick="toggleDoctorPanel('DokterII')">dr. Parningotan
+                {{-- dr yosi sudah mengundurkan diri sejak bulan juni 2026 --}}
+                {{-- <button class="accordion btn btn-primary" onclick="toggleDoctorPanel('DokterII')">dr. Parningotan
                     Yosi Silalahi, Sp.S.
-                </button>
+                </button> --}}
+
                 <div class="panel" id="DokterII">
                     <img src="{{ asset('visitor/assets/img/avatar/avatar_laki.png') }}" alt="Foto Dokter II"
                         id="doctor-image" />
@@ -364,13 +366,13 @@
                         alt="Foto Dokter C" id="doctor-image" />
                 </div>
 
-                {{-- <button class="accordion btn btn-primary" onclick="toggleDoctorPanel('DokterQ')">dr. Semuel
+                <button class="accordion btn btn-primary" onclick="toggleDoctorPanel('DokterQ')">dr. Semuel
                     Alexander Wagiu, Sp.N
                 </button>
                 <div class="panel" id="DokterQ">
                     <img src="{{ asset('visitor/assets/img/avatar/avatar_laki.png') }}" alt="Foto Dokter Q"
                         id="doctor-image" />
-                </div> --}}
+                </div>
 
                 <button class="accordion btn btn-primary" onclick="toggleDoctorPanel('DokterCCC')">
                     dr. Serlly Wattimury, Sp.Rad.
