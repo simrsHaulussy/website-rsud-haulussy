@@ -1012,10 +1012,10 @@
             } = window.CKEDITOR_PREMIUM_FEATURES;
 
             const LICENSE_KEY =
-                'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3ODc4NzUxOTksImp0aSI6ImVmOTYzYjhlLWY0NmEtNGRmZi1hOWJlLWUyMzAwNTBhMDMyNyIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjQwMjdmMjM3In0.UtlgexC69IVhSITmC7b_Ho8z4BJrYX7tcC3uiJaa16Uo3s9LGJdBL3hH-8z-IVTGGHR9qC6OGsngZYKqnnVnaw';
+                'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3OTAwMzUxOTksImp0aSI6IjZkNjkzMzc3LTA0MDgtNGNiZi1hYTZmLTY1YmUzYWJjMTQ5MSIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImE2NGI5NTA3In0.GWZHuqJtLL9lxixg7enXf2WGsTK8bKMdas_We7wa5r-KF9XAVME61YfPSG4ewINqxr1JHOuitL_BivBUTA6N0A';
 
             const CLOUD_SERVICES_TOKEN_URL =
-                'https://7hwnwsoan446.cke-cs.com/token/dev/d52ae940f0bb8e6db05c7393943f78740d17d0a9e726bdd873a95041c0bc?limit=10';
+                'https://zaekp8u7n2vs.cke-cs.com/token/dev/4ea4a5a492127402d3a3755e27f5a6e083528962a8289e1d73eb4eafe92d?limit=10';
 
             const editorConfig = {
                 toolbar: {
